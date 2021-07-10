@@ -1,0 +1,10 @@
+*.log
+.env
+
+flask_session/
+
+*.pyc
+*.pyo
+*.pyd
+__pycache__
+.pytest_cache
