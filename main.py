@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return 'Sceleton code for a simple Python/Flask application'
+    return 'Skeleton code for a simple Python/Flask application'
 
 
 if __name__ == '__main__':
