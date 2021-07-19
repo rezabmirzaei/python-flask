@@ -3,7 +3,7 @@
 Skeleton code for a simple Python/Flask application with the following setup:
 
 * Rest API
-* Server side session management
+* Server side session management and caching
 * API key authentication
 
 ## Docker
