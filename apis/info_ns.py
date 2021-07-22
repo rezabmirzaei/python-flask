@@ -33,6 +33,7 @@ def require_appkey(view_function):
 class Info(Resource):
 
     @require_appkey
+    @ns.doc(security='apikey')
     def get(self):
         '''Fetch default information'''
         # return {'Python': 'Flask'}

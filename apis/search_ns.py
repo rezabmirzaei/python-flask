@@ -13,6 +13,7 @@ parser.add_argument('q', type=str, required=True,
 class Search(Resource):
 
     @ns.expect(parser)
+    @ns.doc(responses={400: 'Missing parameter (\'q\')'})
     def get(self):
         '''Fetch search result'''
         if request.args.get('q') is None:
