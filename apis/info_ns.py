@@ -1,5 +1,5 @@
 from flask_restx import Namespace, Resource, fields
-from utils.decorators import require_appkey
+from utils.decorators import require_api_key
 from utils.caching import cache, cache_key_prefix
 
 
@@ -21,7 +21,7 @@ info_element = ns.model('info_element', {
 @ns.route('/')
 class Info(Resource):
 
-    @require_appkey
+    @require_api_key
     @ns.doc(security='apikey')
     @cache.cached(timeout=60, key_prefix=cache_key_prefix)  # Cached for 60sec
     def get(self):
