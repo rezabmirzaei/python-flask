@@ -1,17 +1,22 @@
+import os
 from datetime import timedelta
 
-from flask import Flask, session
+from dotenv import load_dotenv
+from flask import Flask
 
 from apis import api
 from flask_session import Session
 from utils.caching import cache
 
+
+# ENV VARS
+load_dotenv()  # Default behaviour: look for env var, then in .env file
+
 # FLASK APP
 app = Flask(__name__)
 
 # SESSION MANAGEMENT
-# TODO read from env
-app.config['SECRET_KEY'] = '0f54d116-ae42-469e-8cd7-19496cb338dc'
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 app.config['SESSION_TYPE'] = 'filesystem'
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(hours=5)
 app.config['SESSION_FILE_THRESHOLD'] = 50
@@ -24,4 +29,4 @@ cache.init_app(app)
 api.init_app(app)
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5002)
+    app.run(debug=True, host='0.0.0.0', port=os.getenv('PORT'))
