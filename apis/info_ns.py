@@ -1,7 +1,7 @@
-from functools import wraps
-
-from flask import abort, request
 from flask_restx import Namespace, Resource, fields
+from utils.decorators import require_appkey
+from utils.caching import cache, cache_key_prefix
+
 
 # TODO Tmp solution for datastore
 INFO = [
@@ -18,22 +18,12 @@ info_element = ns.model('Information element', {
 })
 
 
-def require_appkey(view_function):
-    @wraps(view_function)
-    def decorated_function(*args, **kwargs):
-        key = 'test-key'
-        if (request.args.get('key') and request.args.get('key') == key) or (request.headers.get('x-api-key') and request.headers.get('x-api-key') == key):
-            return view_function(*args, **kwargs)
-        else:
-            abort(401)
-    return decorated_function
-
-
 @ns.route('/')
 class Info(Resource):
 
     @require_appkey
     @ns.doc(security='apikey')
+    @cache.cached(timeout=60, key_prefix=cache_key_prefix)  # Cached for 60sec
     def get(self):
         '''Fetch default information'''
         # return {'Python': 'Flask'}
